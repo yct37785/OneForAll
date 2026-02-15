@@ -14,9 +14,6 @@ import mobileAds, {
   MaxAdContentRating,
 } from 'react-native-google-mobile-ads';
 
-const TEST_ID = process.env.EXPO_PUBLIC_ADMOB_DEVICE_TEST_ID;
-const UMP_ID = process.env.EXPO_PUBLIC_ADMOB_DEVICE_UMP_ID;
-
 export type AdsContextType = {
   // flags
   isInitialized: boolean;
@@ -43,7 +40,10 @@ const AdsContext = createContext<AdsContextType | null>(null);
  * - `delayAppMeasurementInit: true` should be set in app.config.js plugin config
  *   so measurement is delayed until consent is settled.
  ********************************************************************************************************************/
-export const AdsProvider: React.FC<{ children: React.ReactNode }> = memo(({ children }) => {
+export const AdsProvider: React.FC<{
+  umpId?: string, // UMP test device identifier used for consent debugging
+  children: React.ReactNode
+}> = memo(({ umpId, children }) => {
   const [isInitialized, setIsInitialized] = useState(false);
   const [canRequestAds, setCanRequestAds] = useState(false);
   const [consentStatus, setConsentStatus] = useState<AdsConsentStatus | null>(null);
@@ -72,10 +72,10 @@ export const AdsProvider: React.FC<{ children: React.ReactNode }> = memo(({ chil
      * 1) Gather consent FIRST (this may show the consent form in EEA or debug EEA)
      */
     const debugOptions =
-      __DEV__ && UMP_ID
+      __DEV__ && umpId
         ? {
           debugGeography: AdsConsentDebugGeography.EEA,
-          testDeviceIdentifiers: [UMP_ID],
+          testDeviceIdentifiers: [umpId],
         }
         : undefined;
 
