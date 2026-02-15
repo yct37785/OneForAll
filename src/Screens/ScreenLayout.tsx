@@ -4,9 +4,6 @@ import { Appbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView, Edge } from 'react-native-safe-area-context';
 import { s, APP_BAR_H } from '../Defines/Styles';
-import AdBanner from '../UI/AdBanner';
-
-const PROD_BANNER_ID = process.env.EXPO_PUBLIC_ADMOB_SCREEN_LAYOUT_BANNER_ID;
 
 export type ScreenLayoutProps = {
   showAppBar?: boolean;
@@ -15,7 +12,6 @@ export type ScreenLayoutProps = {
   showBack?: boolean; // show back btn if can go back
   LeftContent?: React.ReactNode;
   RightContent?: React.ReactNode;
-  showBannerAd?: boolean; // show banner ad at bottom of layout
   children?: React.ReactNode;
 };
 
@@ -33,7 +29,6 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = memo(
     showBack = false,
     LeftContent,
     RightContent,
-    showBannerAd = true,
     children
   }) => {
     const navigation = useNavigation<any>();
@@ -73,9 +68,6 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = memo(
         {/* Screen content */}
         <SafeAreaView style={styles.content} edges={safeAreaEdges}>
           <View style={styles.body}>{children}</View>
-
-          {/* Banner ad */}
-          {showBannerAd ? <AdBanner admobUnitID={PROD_BANNER_ID} /> : null}
         </SafeAreaView>
       </View>
     );
