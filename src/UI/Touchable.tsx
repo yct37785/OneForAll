@@ -12,30 +12,37 @@ import {
 import { useTheme } from 'react-native-paper';
 import { TOUCHABLE_DEFAULTS } from '../Defines/Styles';
 
+/******************************************************************************************************************
+ * Touchable props
+ ******************************************************************************************************************/
 export interface TouchableProps {
-  feedback?: 'opacity' | 'none';
-  disabled?: boolean;
+  feedback?: 'opacity' | 'none' | null;
+  disabled?: boolean | null;
 
-  onPress?: TouchableNativeFeedbackProps['onPress'];
-  onPressIn?: TouchableNativeFeedbackProps['onPressIn'];
-  onPressOut?: TouchableNativeFeedbackProps['onPressOut'];
-  onLongPress?: TouchableNativeFeedbackProps['onLongPress'];
+  onPress?: TouchableNativeFeedbackProps['onPress'] | null;
+  onPressIn?: TouchableNativeFeedbackProps['onPressIn'] | null;
+  onPressOut?: TouchableNativeFeedbackProps['onPressOut'] | null;
+  onLongPress?: TouchableNativeFeedbackProps['onLongPress'] | null;
 
   // RN Navigation may pass null
   delayLongPress?: number | null;
 
-  style?: StyleProp<ViewStyle>;
-  children?: React.ReactNode;
+  style?: StyleProp<ViewStyle> | null;
 
   // overridable, but defaulted from Styles
-  pressedOpacity?: number;
-  rippleColor?: string;
-  rippleBorderless?: boolean;
+  pressOpacity?: number | null;
+  rippleColor?: string | null;
+  rippleBorderless?: boolean | null;
 
   // Android-only
-  useForeground?: boolean;
+  useForeground?: boolean | null;
+  
+  children?: React.ReactNode | null;
 }
 
+/******************************************************************************************************************
+ * Touchable comp
+ ******************************************************************************************************************/
 const Touchable: React.FC<TouchableProps> = memo(
   ({
     feedback = 'opacity',
@@ -48,19 +55,20 @@ const Touchable: React.FC<TouchableProps> = memo(
     delayLongPress,
 
     style,
-    children,
 
-    pressedOpacity,
+    pressOpacity,
     rippleColor,
     rippleBorderless = TOUCHABLE_DEFAULTS.rippleBorderless,
     useForeground = true,
+
+    children,
   }) => {
     const theme = useTheme();
     const isOpacity = feedback === 'opacity';
     const safeDelayLongPress = typeof delayLongPress === 'number' ? delayLongPress : undefined;
 
     const resolvedPressOpacity =
-      pressedOpacity ??
+      pressOpacity ??
       (theme.dark
         ? TOUCHABLE_DEFAULTS.pressedOpacityDark
         : TOUCHABLE_DEFAULTS.pressedOpacityLight);
@@ -76,20 +84,20 @@ const Touchable: React.FC<TouchableProps> = memo(
      **************************************************************************************************************/
     const ripple =
       Platform.OS === 'android' && isOpacity && !disabled
-        ? TouchableNativeFeedback.Ripple(resolvedRippleColor, rippleBorderless)
+        ? TouchableNativeFeedback.Ripple(resolvedRippleColor, rippleBorderless ?? false)
         : undefined;
 
     if (Platform.OS === 'android') {
       return (
         <TouchableNativeFeedback
-          disabled={disabled}
-          onPress={onPress}
-          onPressIn={onPressIn}
-          onPressOut={onPressOut}
-          onLongPress={onLongPress}
+          disabled={disabled ?? undefined}
+          onPress={onPress ?? undefined}
+          onPressIn={onPressIn ?? undefined}
+          onPressOut={onPressOut ?? undefined}
+          onLongPress={onLongPress ?? undefined}
           delayLongPress={safeDelayLongPress}
           background={ripple}
-          useForeground={useForeground}
+          useForeground={useForeground ?? false}
         >
           <View style={[style, isOpacity ? styles.androidClip : null]}>
             {children}

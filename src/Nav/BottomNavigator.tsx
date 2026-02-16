@@ -9,6 +9,11 @@ import Touchable from '../UI/Touchable';
 import type { ScreenGoBack, ScreenNavigate, ScreenType } from '../Screens/Screen';
 import { s, APP_BAR_H } from '../Defines/Styles';
 
+/******************************************************************************************************************
+ * BottomNavigator props:
+ * - We allow "screen components" OR "navigator components"
+ * - Navigators can ignore ScreenProps safely
+ ******************************************************************************************************************/
 export type TabConfig = {
   label: string;
   icon: React.ComponentProps<typeof MaterialCommunityIcons>['name'];
@@ -22,6 +27,9 @@ export type BottomNavigatorProps = {
 
 const Tab = createBottomTabNavigator();
 
+/******************************************************************************************************************
+ * BottomNavigator comp
+ ******************************************************************************************************************/
 export const BottomNavigator: React.FC<BottomNavigatorProps> = memo(
   ({ initialRouteName, tabMap, tabConfig }) => {
     const theme = useTheme();
@@ -63,7 +71,14 @@ export const BottomNavigator: React.FC<BottomNavigatorProps> = memo(
 
             tabBarItemStyle: {},
 
-            tabBarButton: (props) => <Touchable {...props} />,
+            tabBarButton: (props) => {
+              const { disabled, onPress, children, ...rest } = props;
+              return (
+                <Touchable disabled={disabled} onPress={onPress} {...rest}>
+                  {children}
+                </Touchable>
+              );
+            }
 
           };
         }}
