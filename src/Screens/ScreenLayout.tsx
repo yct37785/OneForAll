@@ -5,6 +5,9 @@ import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView, Edge } from 'react-native-safe-area-context';
 import { s, APP_BAR_H } from '../Defines/Styles';
 
+/******************************************************************************************************************
+ * ScreenLayout props
+ ******************************************************************************************************************/
 export type ScreenLayoutProps = {
   showAppBar?: boolean;
   showTitle?: boolean;

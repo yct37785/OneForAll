@@ -14,6 +14,9 @@ import mobileAds, {
   MaxAdContentRating,
 } from 'react-native-google-mobile-ads';
 
+/********************************************************************************************************************
+ * AdsProvider context props
+ ********************************************************************************************************************/
 export type AdsContextType = {
   // flags
   isInitialized: boolean;

@@ -3,6 +3,9 @@ import { StyleSheet, View } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
 import { useAds } from '../Hooks/UseAds';
 
+/******************************************************************************************************************
+ * AdBanner props
+ ******************************************************************************************************************/
 type AdBannerProps = {
   admobUnitID: string;
   // use "ADAPTIVE_BANNER" so it matches screen width

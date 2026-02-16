@@ -2,9 +2,11 @@ import React, { memo } from 'react';
 import { StyleSheet, View, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-
 import { s } from '../Defines/Styles';
 
+/******************************************************************************************************************
+ * IconPillProps props
+ ******************************************************************************************************************/
 type IconPillProps = {
   icon: string;
   style?: ViewStyle;

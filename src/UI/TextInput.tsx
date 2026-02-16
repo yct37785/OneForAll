@@ -13,6 +13,9 @@ import {
 } from 'react-native';
 import { s } from '../Defines/Styles';
 
+/******************************************************************************************************************
+ * TextInput props & utilities
+ ******************************************************************************************************************/
 export type InputKind = 'text' | 'numeric' | 'password' | 'search' | 'email' | 'phone';
 
 export type TextInputProps = Omit<RNTextInputProps, 'keyboardType' | 'secureTextEntry'> & {
@@ -96,6 +99,9 @@ const autoCorrectFromKind = (kind: InputKind): boolean => {
   }
 };
 
+/******************************************************************************************************************
+ * TextInput comp
+ ******************************************************************************************************************/
 export const TextInput = memo((props: TextInputProps) => {
   const {
     type = 'text',

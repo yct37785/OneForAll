@@ -4,11 +4,11 @@ import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ParamListBase } from '@react-navigation/native';
 import type { ScreenNavigate, ScreenGoBack, ScreenType } from '../Screens/Screen';
 
-/**
- * IMPORTANT:
- * - We allow "screen components" OR "navigator components".
- * - Navigators can ignore ScreenProps safely.
- */
+/******************************************************************************************************************
+ * StackNavigator props:
+ * - We allow "screen components" OR "navigator components"
+ * - Navigators can ignore ScreenProps safely
+ ******************************************************************************************************************/
 export type RootStackNavigatorProps = {
   initialRouteName: string;
   screenMap: Record<string, ScreenType>;
@@ -16,6 +16,9 @@ export type RootStackNavigatorProps = {
 
 const Stack = createNativeStackNavigator();
 
+/******************************************************************************************************************
+ * StackNavigator props
+ ******************************************************************************************************************/
 export const StackNavigator: React.FC<RootStackNavigatorProps> = memo(
   ({ initialRouteName, screenMap }) => {
     return (
