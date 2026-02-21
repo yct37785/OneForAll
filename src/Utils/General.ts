@@ -36,3 +36,9 @@ export const normalizePhone = (s: string): string => {
   const digitsOnly = trimmed.replace(/[^\d]/g, '');
   return keepPlus ? `+${digitsOnly}` : digitsOnly;
 };
+
+export const isNonEmptyString = (v: unknown): v is string =>
+  typeof v === 'string' && v.trim().length > 0;
+
+export const isNonEmptyStringArray = (v: unknown): v is string[] =>
+  Array.isArray(v) && v.length > 0 && v.every((x) => typeof x === 'string');
