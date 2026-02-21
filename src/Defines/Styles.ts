@@ -23,5 +23,6 @@ export const TOUCHABLE_DEFAULTS = {
 
 export const X_BTN_ICON_S = 2.5;
 export const ICON_SIZE_S = 22;
+export const ICON_SIZE_M = 28;
 
 export const DISABLED_OPACITY = 0.5;
