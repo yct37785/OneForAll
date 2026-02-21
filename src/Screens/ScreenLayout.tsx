@@ -1,6 +1,6 @@
 import React, { memo, useMemo } from 'react';
 import { View, StyleSheet } from 'react-native';
-import { Appbar } from 'react-native-paper';
+import { useTheme, Appbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView, Edge } from 'react-native-safe-area-context';
 import { s, APP_BAR_H } from '../Defines/Styles';
@@ -34,6 +34,7 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = memo(
     RightContent,
     children
   }) => {
+    const theme = useTheme();
     const navigation = useNavigation<any>();
 
     // only show back if the screen wants it AND nav stack allows it.
@@ -69,7 +70,7 @@ export const ScreenLayout: React.FC<ScreenLayoutProps> = memo(
         </Appbar.Header> : null}
 
         {/* Screen content */}
-        <SafeAreaView style={styles.content} edges={safeAreaEdges}>
+        <SafeAreaView style={[styles.content, { backgroundColor: theme.colors.background }]} edges={safeAreaEdges}>
           <View style={styles.body}>{children}</View>
         </SafeAreaView>
       </View>

@@ -23,7 +23,7 @@ const ToggleButton: React.FC<ToggleButtonProps> = memo(
   }) => {
     const theme = useTheme();
 
-    const bg = selected ? theme.colors.primary : theme.colors.surface;
+    const bg = selected ? theme.colors.primary : undefined;
     const fg = selected ? theme.colors.onPrimary : theme.colors.onSurfaceVariant;
 
     return (
