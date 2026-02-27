@@ -4,6 +4,7 @@ import { useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { rgba32ToRgbaCss } from '../Utils/Colors';
 import Touchable from './Touchable';
+import { GRID_SELECTOR } from '../Defines/Styles';
 
 /******************************************************************************************************************
  * GridSelector props
@@ -14,7 +15,7 @@ export type GridSelectorItem =
 
 type CommonProps = {
   items: GridSelectorItem[];
-  cellSize: number;
+  cellSize?: number;
 
   selectedKey?: string | null;
   onSelect: (item: GridSelectorItem, index: number) => void;
@@ -43,7 +44,7 @@ const GridSelector: React.FC<GridSelectorProps> = memo((props) => {
 
   const {
     items,
-    cellSize,
+    cellSize = GRID_SELECTOR.cellSize,
     selectedKey,
     onSelect,
     disabled,

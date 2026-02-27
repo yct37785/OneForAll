@@ -26,3 +26,7 @@ export const ICON_SIZE_S = 22;
 export const ICON_SIZE_M = 28;
 
 export const DISABLED_OPACITY = 0.5;
+
+export const GRID_SELECTOR = {
+  cellSize: 24,
+} as const;
