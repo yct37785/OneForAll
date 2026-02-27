@@ -56,18 +56,6 @@ const GridSelector: React.FC<GridSelectorProps> = memo((props) => {
 
   const axis: 'horizontal' | 'vertical' = 'maxRows' in props ? 'horizontal' : 'vertical';
 
-  const cols = useMemo(() => {
-    if (axis === 'vertical') return Math.max(1, props.maxCols ?? 1);
-    // horizontal: cols per "page" is derived from item count; we render pages
-    // but each page width is cols*cellSize (see below)
-    return 0; // unused directly in horizontal page calc
-  }, [axis, props]);
-
-  const rows = useMemo(() => {
-    if (axis === 'horizontal') return Math.max(1, props.maxRows ?? 1);
-    return 0; // unused directly in vertical page calc
-  }, [axis, props]);
-
   const resolvedIconSize = iconSize ?? Math.floor(cellSize * 0.6);
   const resolvedIconColor = iconColor ?? theme.colors.onSurfaceVariant;
 
@@ -112,11 +100,13 @@ const GridSelector: React.FC<GridSelectorProps> = memo((props) => {
 
     const pageWidth = pageCols * cellSize;
     const viewHeight = fixedRows * cellSize;
+    const isScrollable = pages.length > 1;
 
     return (
       <View style={[styles.wrap, style, { height: viewHeight }]}>
         <ScrollView
           horizontal
+          scrollEnabled={isScrollable && !disabled}
           showsHorizontalScrollIndicator={false}
           bounces
           scrollEventThrottle={16}
