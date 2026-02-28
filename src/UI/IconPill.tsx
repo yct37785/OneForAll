@@ -8,7 +8,7 @@ import { s } from '../Defines/Styles';
  * IconPillProps props
  ******************************************************************************************************************/
 type IconPillProps = {
-  icon: string;
+  icon: keyof typeof MaterialCommunityIcons.glyphMap;
   style?: ViewStyle;
 
   /**
