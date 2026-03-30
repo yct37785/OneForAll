@@ -2,20 +2,21 @@
   "name": "oneforall",
   "version": "1.0.0",
   "private": true,
-
   "devDependencies": {
     "@expo/vector-icons": "^15.0.2",
     "@react-navigation/bottom-tabs": "^7.15.2",
     "@react-navigation/native": "^7.1.31",
     "@react-navigation/native-stack": "^7.14.2",
+    "@types/react": "~19.2.2",
     "lodash": "^4.17.23",
     "react": "19.2.0",
     "react-native": "0.83.2",
     "react-native-google-mobile-ads": "^16.0.3",
     "react-native-paper": "^5.15.0",
-    "uuid": "^13.0.0",
-
-    "@types/react": "~19.2.2",
-    "typescript": "~5.9.2"
+    "typescript": "~5.9.2",
+    "uuid": "^13.0.0"
+  },
+  "dependencies": {
+    "react-native-popup-menu": "^0.19.0"
   }
 }
