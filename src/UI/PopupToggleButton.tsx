@@ -57,7 +57,7 @@ const PopupToggleButtonInner = <T extends string>({
         placement: 'top',
       }}
     >
-      <MenuTrigger>
+      <MenuTrigger onPress={onPress}>
         <View
           style={[
             styles.btn,
@@ -91,7 +91,6 @@ const PopupToggleButtonInner = <T extends string>({
               <MenuOption
                 key={option.value}
                 onSelect={() => {
-                  onPress?.();
                   onPick(option.value);
                 }}
                 customStyles={{
