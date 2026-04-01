@@ -1,16 +1,19 @@
 import React, { memo, useMemo } from 'react';
-import { Pressable, StyleSheet, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 import { Icon, useTheme } from 'react-native-paper';
 import {
   Menu,
   MenuTrigger,
   MenuOptions,
   MenuOption,
+  renderers,
 } from 'react-native-popup-menu';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { s, ICON_SIZE_S } from '../Defines/Styles';
 
-import { s } from '../Defines/Styles';
-
+/******************************************************************************************************************
+ * PopupToggleButton props
+ ******************************************************************************************************************/
 export type PopupToggleOption<T extends string> = {
   value: T;
   icon: keyof typeof MaterialCommunityIcons.glyphMap;
@@ -25,6 +28,11 @@ type PopupToggleButtonProps<T extends string> = {
   onPick: (value: T) => void;
 };
 
+const { Popover } = renderers;
+
+/******************************************************************************************************************
+ * PopupToggleButton
+ ******************************************************************************************************************/
 const PopupToggleButtonInner = <T extends string>({
   selected = false,
   onPress,
@@ -39,63 +47,83 @@ const PopupToggleButtonInner = <T extends string>({
     [options, selectedValue]
   );
 
+  const getBtnColor = useMemo(
+    () =>
+      (kind: 'bg' | 'fg', isSelected: boolean) => {
+        if (kind === 'bg') {
+          return isSelected ? theme.colors.primary : 'transparent';
+        }
+        return isSelected ? theme.colors.onPrimary : theme.colors.onSurfaceVariant;
+      },
+    [theme.colors.onPrimary, theme.colors.onSurfaceVariant, theme.colors.primary]
+  );
+
   if (!selectedOption) return null;
 
-  const triggerBg = selected ? theme.colors.primary : 'transparent';
-  const triggerFg = selected ? theme.colors.onPrimary : theme.colors.onSurfaceVariant;
-
   return (
-    <Menu>
-      <MenuTrigger onPress={onPress}>
+    <Menu
+      renderer={Popover}
+      rendererProps={{
+        placement: 'top',
+      }}
+    >
+      <MenuTrigger>
         <View
           style={[
-            styles.trigger,
-            { backgroundColor: triggerBg },
+            styles.btn,
+            { backgroundColor: getBtnColor('bg', selected) },
           ]}
         >
           <Icon
             source={selectedOption.icon}
-            size={20}
-            color={triggerFg}
+            size={ICON_SIZE_S}
+            color={getBtnColor('fg', selected)}
           />
         </View>
       </MenuTrigger>
 
       <MenuOptions
         customStyles={{
+          optionsWrapper: {
+            alignSelf: 'flex-start',
+          },
           optionsContainer: {
-            padding: s(0.75),
             borderRadius: s(1),
             backgroundColor: theme.colors.elevation?.level2 ?? theme.colors.surface,
           },
         }}
       >
-        <View style={styles.optionsRow}>
+        <View style={styles.row}>
           {options.map((option) => {
             const isSelected = option.value === selectedValue;
 
             return (
               <MenuOption
                 key={option.value}
-                onSelect={() => onPick(option.value)}
+                onSelect={() => {
+                  onPress?.();
+                  onPick(option.value);
+                }}
+                customStyles={{
+                  optionWrapper: {
+                    padding: 0,
+                  },
+                }}
               >
-                <Pressable
-                  pointerEvents='none'
+                <View
                   style={[
-                    styles.optionOuter,
+                    styles.btn,
                     {
-                      borderWidth: isSelected ? 2 : 0,
-                      borderColor: theme.colors.primary,
-                      backgroundColor: isSelected ? theme.colors.primary : 'transparent',
+                      backgroundColor: getBtnColor('bg', isSelected),
                     },
                   ]}
                 >
                   <Icon
                     source={option.icon}
-                    size={20}
-                    color={isSelected ? theme.colors.onPrimary : theme.colors.onSurfaceVariant}
+                    size={ICON_SIZE_S}
+                    color={getBtnColor('fg', isSelected)}
                   />
-                </Pressable>
+                </View>
               </MenuOption>
             );
           })}
@@ -106,23 +134,18 @@ const PopupToggleButtonInner = <T extends string>({
 };
 
 const styles = StyleSheet.create({
-  trigger: {
-    minWidth: s(6),
-    minHeight: s(6),
-    borderRadius: s(1.25),
+  btn: {
+    padding: s(1),
+    borderRadius: s(1),
     alignItems: 'center',
     justifyContent: 'center',
+    overflow: 'hidden',
   },
-  optionsRow: {
+  row: {
     flexDirection: 'row',
+    padding: s(1),
     gap: s(1),
-  },
-  optionOuter: {
-    minWidth: s(6),
-    minHeight: s(6),
-    borderRadius: s(1.25),
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignSelf: 'flex-start',
   },
 });
 
