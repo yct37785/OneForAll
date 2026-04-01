@@ -9,6 +9,7 @@ import {
   renderers,
 } from 'react-native-popup-menu';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import { getToggleBtnColor } from './ToggleButton';
 import { s, ICON_SIZE_S } from '../Defines/Styles';
 
 /******************************************************************************************************************
@@ -47,17 +48,6 @@ const PopupToggleButtonInner = <T extends string>({
     [options, selectedValue]
   );
 
-  const getBtnColor = useMemo(
-    () =>
-      (kind: 'bg' | 'fg', isSelected: boolean) => {
-        if (kind === 'bg') {
-          return isSelected ? theme.colors.primary : 'transparent';
-        }
-        return isSelected ? theme.colors.onPrimary : theme.colors.onSurfaceVariant;
-      },
-    [theme.colors.onPrimary, theme.colors.onSurfaceVariant, theme.colors.primary]
-  );
-
   if (!selectedOption) return null;
 
   return (
@@ -71,13 +61,13 @@ const PopupToggleButtonInner = <T extends string>({
         <View
           style={[
             styles.btn,
-            { backgroundColor: getBtnColor('bg', selected) },
+            { backgroundColor: getToggleBtnColor(theme, selected, 'bg') },
           ]}
         >
           <Icon
             source={selectedOption.icon}
             size={ICON_SIZE_S}
-            color={getBtnColor('fg', selected)}
+            color={getToggleBtnColor(theme, selected, 'fg')}
           />
         </View>
       </MenuTrigger>
@@ -114,14 +104,14 @@ const PopupToggleButtonInner = <T extends string>({
                   style={[
                     styles.btn,
                     {
-                      backgroundColor: getBtnColor('bg', isSelected),
+                      backgroundColor: getToggleBtnColor(theme, isSelected, 'bg'),
                     },
                   ]}
                 >
                   <Icon
                     source={option.icon}
                     size={ICON_SIZE_S}
-                    color={getBtnColor('fg', isSelected)}
+                    color={getToggleBtnColor(theme, isSelected, 'fg')}
                   />
                 </View>
               </MenuOption>

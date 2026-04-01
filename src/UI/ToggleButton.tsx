@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
 import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
-import { Icon, useTheme } from 'react-native-paper';
+import { Icon, useTheme, MD3Theme } from 'react-native-paper';
 import IconButton, { IconButtonProps } from './IconButton';
 
 /******************************************************************************************************************
@@ -9,6 +9,13 @@ import IconButton, { IconButtonProps } from './IconButton';
 export type ToggleButtonProps = Omit<IconButtonProps, 'bgColor' | 'iconColor'> & {
   selected?: boolean;
 };
+
+export function getToggleBtnColor(theme: MD3Theme, isSelected: boolean, type: 'bg' | 'fg'): string {
+  if (type === 'bg') {
+    return isSelected ? theme.colors.primary : 'transparent';
+  }
+  return isSelected ? theme.colors.onPrimary : theme.colors.onSurfaceVariant;
+}
 
 /******************************************************************************************************************
  * Uses IconButton:
@@ -22,15 +29,11 @@ const ToggleButton: React.FC<ToggleButtonProps> = memo(
     ...rest
   }) => {
     const theme = useTheme();
-
-    const bg = selected ? theme.colors.primary : undefined;
-    const fg = selected ? theme.colors.onPrimary : theme.colors.onSurfaceVariant;
-
     return (
       <IconButton
         {...rest}
-        bgColor={bg}
-        iconColor={fg}
+        bgColor={getToggleBtnColor(theme, selected, 'bg')}
+        iconColor={getToggleBtnColor(theme, selected, 'fg')}
       />
     );
   }
