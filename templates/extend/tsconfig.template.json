@@ -10,10 +10,6 @@
     "module": "ESNext",
     "moduleResolution": "bundler",
     "isolatedModules": true,
-    "noEmit": true,
-
-    "paths": {
-      "@shared/*": ["../OneForAll/src/*"]
-    }
+    "noEmit": true
   }
 }
