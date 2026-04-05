@@ -4,11 +4,8 @@
     "module": "ESNext",
     "moduleResolution": "Bundler",
     "jsx": "react-jsx",
-
     "strict": true,
-    "skipLibCheck": true,
-
-    "baseUrl": "."
+    "skipLibCheck": true
   },
   "include": ["src"]
 }
