@@ -42,3 +42,11 @@ export const isNonEmptyString = (v: unknown): v is string =>
 
 export const isNonEmptyStringArray = (v: unknown): v is string[] =>
   Array.isArray(v) && v.length > 0 && v.every((x) => typeof x === 'string');
+
+export function isNonEmptyValue<T>(value: T | null | undefined): value is T {
+  return value !== null && value !== undefined;
+}
+
+export function isNonEmptyArray(value: unknown): value is unknown[] {
+  return Array.isArray(value) && value.length > 0;
+}
