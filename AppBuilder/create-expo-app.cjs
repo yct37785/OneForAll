@@ -135,6 +135,26 @@ function renderAppConfig(templateContent, { appName, packageName, slug }) {
     .replaceAll('__APP_PACKAGE__', packageName);
 }
 
+function updatePackageJsonScripts(appDir) {
+  const packageJsonPath = path.join(appDir, 'package.json');
+  requireFile(packageJsonPath);
+
+  const packageJson = JSON.parse(fs.readFileSync(packageJsonPath, 'utf8'));
+
+  packageJson.scripts = {
+    start: 'expo start',
+    android: 'expo run:android',
+    ios: 'expo run:ios',
+    web: 'expo start --web',
+    setup: 'npm install',
+    'setup:clean': 'rm -rf node_modules package-lock.json && npm install',
+    typecheck: 'tsc -b -v',
+  };
+
+  fs.writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`, 'utf8');
+  console.log('Updated: package.json scripts');
+}
+
 async function main() {
   try {
     const builderDir = path.resolve(__dirname);
@@ -226,6 +246,9 @@ async function main() {
 
     fs.writeFileSync(appConfigPath, renderedAppConfig, 'utf8');
     console.log('Generated: app.config.js');
+
+    section('Step 7: Replacing package.json scripts');
+    updatePackageJsonScripts(appDir);
 
     section('Done');
     console.log(`Expo app created successfully: ${appDir}`);
