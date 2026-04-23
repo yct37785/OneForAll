@@ -1,0 +1,15 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "../OneForAll"
+		}
+	],
+	"settings": {
+		"files.exclude": {
+			"**/*.code-workspace": true
+		}
+	}
+}
