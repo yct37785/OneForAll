@@ -13,6 +13,7 @@ react-native-gesture-handler
 react-native-get-random-values
 react-native-keyboard-controller
 react-native-paper
+react-native-popup-menu
 react-native-reanimated
 react-native-screens
 react-native-worklets

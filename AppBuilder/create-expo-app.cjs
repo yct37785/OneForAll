@@ -123,8 +123,24 @@ function copyDirectoryContents(sourceDir, targetDir) {
       copyDirectoryContents(sourcePath, targetPath);
     } else {
       fs.copyFileSync(sourcePath, targetPath);
-      console.log(`Copied: ${entry.name}`);
+      console.log(`Copied: ${path.relative(sourceDir, sourcePath)}`);
     }
+  }
+}
+
+function removeIfExists(targetPath) {
+  if (!fs.existsSync(targetPath)) {
+    return;
+  }
+
+  const stat = fs.statSync(targetPath);
+
+  if (stat.isDirectory()) {
+    fs.rmSync(targetPath, { recursive: true, force: true });
+    console.log(`Deleted directory: ${targetPath}`);
+  } else {
+    fs.unlinkSync(targetPath);
+    console.log(`Deleted file: ${targetPath}`);
   }
 }
 
@@ -147,12 +163,36 @@ function updatePackageJsonScripts(appDir) {
     ios: 'expo run:ios',
     web: 'expo start --web',
     setup: 'npm install',
-    'setup:clean': 'rm -rf node_modules package-lock.json && npm install',
+    'setup:clean': 'if exist node_modules rmdir /s /q node_modules && if exist package-lock.json del /f package-lock.json && npm install',
     typecheck: 'tsc -b -v',
   };
 
   fs.writeFileSync(packageJsonPath, `${JSON.stringify(packageJson, null, 2)}\n`, 'utf8');
   console.log('Updated: package.json scripts');
+}
+
+function applyStarterCode(appDir, codeDir) {
+  requireDir(codeDir);
+
+  const starterIndexPath = path.join(codeDir, 'index.ts');
+  const starterSrcDir = path.join(codeDir, 'src');
+
+  requireFile(starterIndexPath);
+  requireDir(starterSrcDir);
+
+  const appIndexPath = path.join(appDir, 'index.ts');
+  const appTsxPath = path.join(appDir, 'App.tsx');
+  const appSrcDir = path.join(appDir, 'src');
+
+  removeIfExists(appIndexPath);
+  removeIfExists(appTsxPath);
+  removeIfExists(appSrcDir);
+
+  fs.copyFileSync(starterIndexPath, appIndexPath);
+  console.log('Copied: index.ts');
+
+  fs.mkdirSync(appSrcDir, { recursive: true });
+  copyDirectoryContents(starterSrcDir, appSrcDir);
 }
 
 async function main() {
@@ -165,6 +205,7 @@ async function main() {
     const devDepsFile = path.join(builderDir, 'dev dependencies.txt');
 
     const filesDir = path.join(builderDir, 'files');
+    const codeDir = path.join(builderDir, 'code');
     const appConfigTemplateFile = path.join(filesDir, 'app.config.js');
 
     section('OneForAll Expo App Generator');
@@ -173,11 +214,15 @@ async function main() {
     console.log(`OneForAll directory : ${oneForAllDir}`);
     console.log(`Workspace directory : ${workspaceDir}`);
     console.log(`Files directory     : ${filesDir}`);
+    console.log(`Code directory      : ${codeDir}`);
 
     requireFile(depsFile);
     requireFile(devDepsFile);
     requireDir(filesDir);
+    requireDir(codeDir);
     requireFile(appConfigTemplateFile);
+    requireFile(path.join(codeDir, 'index.ts'));
+    requireDir(path.join(codeDir, 'src'));
 
     section('Step 1: App name');
     const appName = await ask('Enter app name (example: MyAppName): ');
@@ -247,7 +292,10 @@ async function main() {
     fs.writeFileSync(appConfigPath, renderedAppConfig, 'utf8');
     console.log('Generated: app.config.js');
 
-    section('Step 7: Replacing package.json scripts');
+    section('Step 7: Replacing starter code');
+    applyStarterCode(appDir, codeDir);
+
+    section('Step 8: Replacing package.json scripts');
     updatePackageJsonScripts(appDir);
 
     section('Done');
