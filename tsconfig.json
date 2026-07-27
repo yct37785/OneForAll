@@ -1,4 +1,5 @@
 {
+  "extends": "../OneForAll/templates/extend/tsconfig.template.json",
   "compilerOptions": {
     "target": "ES2022",
     "module": "ESNext",
