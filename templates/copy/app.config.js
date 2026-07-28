@@ -34,16 +34,7 @@ export default ({ config }) => ({
       favicon: "./assets/favicon.png"
     },
     plugins: [
-      [
-        "react-native-google-mobile-ads",
-        {
-          androidAppId: process.env.EXPO_ANDROID_ADMOB_APP_ID,
-          iosAppId: process.env.EXPO_IOS_ADMOB_APP_ID,
-          delayAppMeasurementInit: true,
-          userTrackingUsageDescription: "This identifier will be used to deliver personalized ads to you."
-        }
-      ],
-      [
+	    [
         "expo-build-properties",
         {
           android: {
@@ -51,13 +42,22 @@ export default ({ config }) => ({
           }
         }
       ],
-      [
-        "expo-file-system",
-        {
-          supportsOpeningDocumentsInPlace: true,
-          enableFileSharing: true
-        }
-      ]
+      // [
+      //   "react-native-google-mobile-ads",
+      //   {
+      //     androidAppId: process.env.EXPO_ANDROID_ADMOB_APP_ID,
+      //     iosAppId: process.env.EXPO_IOS_ADMOB_APP_ID,
+      //     delayAppMeasurementInit: true,
+      //     userTrackingUsageDescription: "This identifier will be used to deliver personalized ads to you."
+      //   }
+      // ],
+      // [
+      //   "expo-file-system",
+      //   {
+      //     supportsOpeningDocumentsInPlace: true,
+      //     enableFileSharing: true
+      //   }
+      // ]
     ]
   }
 });
