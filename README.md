@@ -29,9 +29,25 @@ This structure is required because:
 
 ---
 
-# Setup
+# How Apps Consume OneForAll
 
-From inside `OneForAll/`, run:
+Each app:
+
+* Uses Metro watchFolders to include `../OneForAll/src`
+* Uses TypeScript path mapping (`@shared/*`)
+* Imports shared code directly
+
+Example import:
+
+```ts
+import { AdsProvider } from "@shared/Hooks/UseAds";
+```
+
+---
+
+# Setting Up OneForAll
+
+Once cloned, from inside `OneForAll/`, run:
 
 ```
 install.bat
@@ -52,21 +68,9 @@ It is **not used at runtime**.
 
 Metro always resolves dependencies from the consuming app's `node_modules`.
 
----
+## Important pre-requisites
 
-# How Apps Consume OneForAll
-
-Each app:
-
-* Uses Metro watchFolders to include `../OneForAll/src`
-* Uses TypeScript path mapping (`@shared/*`)
-* Imports shared code directly
-
-Example import:
-
-```ts
-import { AdsProvider } from "@shared/Hooks/UseAds";
-```
+Ensure your **JAVA_HOME** is pointed to JDK version 21 and below. This is due to a requirement with sub-dependency react-native-screens.
 
 ---
 
