@@ -3,7 +3,7 @@ setlocal
 
 pushd "%~dp0"
 
-set "CLEAN_INSTALL="
+set "CLEAN_INSTALL=true"
 
 call "..\OneForAll\templates\scripts\run-android-dev.bat"
 

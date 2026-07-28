@@ -3,8 +3,8 @@ import 'dotenv/config';
 export default ({ config }) => ({
   ...config,
   expo: {
-    name: "MyAppName",
-    slug: "MyAppName",
+    name: "__APP_NAME__",
+    slug: "__APP_SLUG__",
     version: "1.0.0",
     orientation: "portrait",
     icon: "./assets/icon.png",
@@ -27,7 +27,7 @@ export default ({ config }) => ({
       },
       edgeToEdgeEnabled: true,
       predictiveBackGestureEnabled: false,
-      package: "com.oxthree.pix2art",
+      package: "__APP_PACKAGE__",
       versionCode: 1
     },
     web: {

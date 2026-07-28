@@ -1,37 +1,12 @@
 @echo off
-echo ================================
-echo Building Android Release AAB...
-echo ================================
+setlocal
 
-REM Check if android folder exists
-if not exist android (
-    echo ERROR: android folder not found.
-    echo Run: npx expo prebuild -p android
-    pause
-    exit /b 1
-)
+pushd "%~dp0"
 
-REM Move into android folder
-cd android
+call "..\OneForAll\templates\scripts\build-release-aab.bat"
+set "ERR=%ERRORLEVEL%"
 
-REM Clean previous build (optional but recommended)
-echo Cleaning previous build...
-call gradlew clean
+popd
+endlocal
 
-REM Build release AAB
-echo Building release bundle...
-call gradlew bundleRelease
-
-REM Check if build succeeded
-if exist app\build\outputs\bundle\release\app-release.aab (
-    echo.
-    echo ================================
-    echo SUCCESS! AAB generated at:
-    echo android\app\build\outputs\bundle\release\app-release.aab
-    echo ================================
-) else (
-    echo.
-    echo Build failed. Check errors above.
-)
-
-pause
+exit /b %ERR%
