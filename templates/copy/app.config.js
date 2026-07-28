@@ -34,6 +34,9 @@ export default ({ config }) => ({
       favicon: "./assets/favicon.png"
     },
     plugins: [
+      [
+        "expo-status-bar"
+      ],
 	    [
         "expo-build-properties",
         {
