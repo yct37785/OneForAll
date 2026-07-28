@@ -111,12 +111,6 @@ Copy over from `OneForAll/templates/starter code` to your app project root.
 
 Create a **.env** file if needed.
 
-Run the install script that was copied over earlier in your app root:
-
-```
-install.bat
-```
-
 Assuming an Android device is connected, run the dev script that will build the app and run hot reloading:
 
 ```
