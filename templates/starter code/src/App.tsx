@@ -10,7 +10,7 @@ import { Provider as PaperProvider, adaptNavigationTheme, MD3LightTheme, MD3Dark
 import { MenuProvider } from 'react-native-popup-menu';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import { KeyboardProvider } from 'react-native-keyboard-controller';
-import * as NavigationBar from 'expo-navigation-bar';
+import { NavigationBar } from 'expo-navigation-bar';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 // nav
@@ -55,13 +55,11 @@ const Root: React.FC<{}> = (props) => {
    */
   useEffect(() => {
     StatusBar.setBarStyle(isDarkMode ? 'light-content' : 'dark-content', true);
-    if (Platform.OS === 'android') {
-      NavigationBar.setButtonStyleAsync(isDarkMode ? 'light' : 'dark');
-    }
   }, [isDarkMode]);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
+      <NavigationBar style={isDarkMode ? 'light' : 'dark'} />
       <PaperProvider theme={paperTheme}>
         {/* <AdsProvider umpId={process.env.EXPO_PUBLIC_ADMOB_DEVICE_UMP_ID}> */}
           <NavigationContainer theme={navTheme}>
