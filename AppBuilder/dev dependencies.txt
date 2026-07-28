@@ -1,3 +1,0 @@
-@babel/core
-@types/react
-typescript
