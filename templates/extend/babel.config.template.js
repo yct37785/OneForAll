@@ -1,11 +1,25 @@
-module.exports = function makeBabelConfig(api) {
+module.exports = function createBabelConfig(api, overrides = {}) {
   api.cache(true);
 
+  const {
+    presets = [],
+    plugins = [],
+    finalPlugins = [],
+    ...otherOverrides
+  } = overrides;
+
   return {
-    presets: ["babel-preset-expo"],
-    plugins: [
-      // using react-native-paper
-      "react-native-paper/babel",
+    presets: [
+      "babel-preset-expo",
+      ...presets,
     ],
+
+    plugins: [
+      "react-native-paper/babel",
+      ...plugins,
+      ...finalPlugins,
+    ],
+
+    ...otherOverrides,
   };
 };
