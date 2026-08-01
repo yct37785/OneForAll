@@ -6,9 +6,6 @@ module.exports = function makeBabelConfig(api) {
     plugins: [
       // using react-native-paper
       "react-native-paper/babel",
-
-      // must be LAST
-      "react-native-reanimated/plugin",
     ],
   };
 };
