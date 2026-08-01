@@ -4,7 +4,7 @@ setlocal
 pushd "%~dp0"
 
 REM Run cross-platform setup (sync first, then install)
-call npm run setup
+call npm install
 set ERR=%ERRORLEVEL%
 
 echo.
