@@ -193,13 +193,214 @@ plugins: [
 
 Remember to run the rebuild app script.
 
+## Embedding native code
+
+**Pre-requisite:** use an NPM version below 12, this is due to incompatibility between NPM@12 and create-expo-module. See [issue](https://github.com/expo/expo/issues/48091 "issue").
+
+```
+npm install -g npm@11
+```
+
+We will create a local Expo module embedded into the app itself. In your app's project directory, run:
+
+```
+npx create-expo-module@latest --local
+```
+
+When prompted, use values simliar to:
+
+```
+Local module name:
+> my-local-module
+
+Native module name:
+> MyLocalModule
+
+Android package name:
+> expo.modules.mylocalmodule
+
+Platforms:
+* Android
+
+Examples/features:
+* Function
+* AsyncFunction
+```
+
+On success, the program will inform us that the Expo module is created at ```modules/my-local-module```. Do not rename or move any of the files.
+
+The file structure of your created module should be as follows:
+
+```
+modules/my-local-module/
+├─ android/						# native logic implementation
+│  ├─ build.gradle
+│  └─ src/main/
+│     ├─ AndroidManifest.xml
+│     └─ java/...
+│        └─ MyLocalModule.kt
+├─ src/							# JS-native module definition
+│  ├─ MyLocalModule.ts
+│  └─ MyLocalModule.types.ts
+└─ expo-module.config.json		# Expo module configuration
+```
+
+Check **expo-module.config.json**: the Android modules entry must be the package + class name.
+
+```
+{
+  ...
+  "android": {
+    "modules": ["expo.modules.mylocalmodule.MyLocalModule"]
+  }
+}
+```
+
+Within **android/../MyLocalModule.kt**:
+
+```
+package expo.modules.mylocalmodule
+
+...
+
+class MyLocalModule : Module() {
+```
+
+Let's do a simple demo. Replace the native module class code with the following:
+
+```
+  /**
+   * This value only lives in memory.
+   * It resets when the native module/app process is restarted.
+   */
+  @Volatile
+  private var storedValue: String = ""
+
+  override fun definition() = ModuleDefinition {
+    Name("MyLocalModule")
+
+    /**
+     * Simple synchronous function.
+     */
+    Function("hello") {
+      "Hello world! 👋"
+    }
+
+    /**
+     * Synchronous write.
+     *
+     * JavaScript receives the returned value immediately.
+     */
+    Function("setValue") { value: String ->
+      storedValue = value
+      storedValue
+    }
+
+    /**
+     * Synchronous read.
+     */
+    Function("getValue") {
+      storedValue
+    }
+
+    /**
+     * Asynchronous write.
+     *
+     * Returns a Promise<string> to JavaScript.
+     */
+    AsyncFunction("setValueAsync") { value: String ->
+      // simulated slow native work for demo
+      Thread.sleep(500)
+
+      storedValue = value
+      storedValue
+    }
+
+    /**
+     * Asynchronous read.
+     *
+     * Returns a Promise<string> to JavaScript.
+     */
+    AsyncFunction("getValueAsync") {
+      // simulate fetching data from storage, an SDK, network, DB etc
+      Thread.sleep(500)
+
+      storedValue
+    }
+  }
+```
+
+*@Volatile makes reads and writes to the property visible across the threads that may execute the sync and async function.*
+
+Now within **src/MyLocalModule.ts**, update the JS-native class and function definitions. Note class name and functions name + signature MUST match their native Kotlin counterparts.
+
+```
+declare class MyLocalModule extends NativeModule<{}> {
+  /**
+   * Returns a greeting synchronously.
+   */
+  hello(): string;
+
+  /**
+   * Writes a value synchronously and returns the written value.
+   */
+  setValue(value: string): string;
+
+  /**
+   * Reads the current value synchronously.
+   */
+  getValue(): string;
+
+  /**
+   * Writes a value asynchronously and resolves with the written value.
+   */
+  setValueAsync(value: string): Promise<string>;
+
+  /**
+   * Reads the current value asynchronously.
+   */
+  getValueAsync(): Promise<string>;
+}
+```
+
+Now back to the Expo app, update the tsconfig.json to include an alias to the module directory:
+
+```
+	...
+    "paths": {
+		...
+      "@Module/*": ["./modules/*"],
+    },
+  },
+```
+
+Then import and use the functions in your regular React Native code like so:
+
+```
+import MyLocalModule from '@Module/my-local-module/src/MyLocalModule';
+
+...
+console.log(MyLocalModule.hello());
+await MyLocalModule.setValueAsync("testing 123");
+const v = await MyLocalModule.getValueAsync();
+console.log(v);
+```
+
+Run the dev build sequence:
+
+```
+run-android-dev.bat
+```
+
+You should now see the outputs from the native functions.
+
 ---
 
 # Contributing
 
 If you add a new external dependency inside `OneForAll/src/`:
 
-1. Add it to `devDependencies` in `OneForAll/package.json`
+1. Add it to **devDependencies** in **OneForAll/package.json**
 2. Run:
 
 ```
