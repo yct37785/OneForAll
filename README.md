@@ -394,6 +394,12 @@ run-android-dev.bat
 
 You should now see the outputs from the native functions.
 
+You can add the following to your project gitignore to ignore the module's generated Android build folder.
+
+```
+modules/**/android/build/
+```
+
 ---
 
 # Contributing
