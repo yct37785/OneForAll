@@ -28,6 +28,7 @@ export default ({ config }) => ({
       edgeToEdgeEnabled: true,
       predictiveBackGestureEnabled: false,
       package: "__APP_PACKAGE__",
+      permissions: [],
       versionCode: 1
     },
     web: {
