@@ -94,7 +94,7 @@ npx create-expo-app@latest MyAppName --template blank-typescript
 Then install the following dependencies:
 
 ```
-npx expo install @expo/vector-icons @react-navigation/bottom-tabs @react-navigation/native @react-navigation/native-stack babel-preset-expo dotenv expo-application expo-build-properties expo-crypto expo-intent-launcher expo-navigation-bar expo-status-bar lodash react-native-gesture-handler react-native-get-random-values react-native-keyboard-controller react-native-paper react-native-popup-menu react-native-reanimated react-native-screens react-native-worklets uuid
+npx expo install @expo/vector-icons @react-navigation/bottom-tabs @react-navigation/native @react-navigation/native-stack babel-preset-expo expo-application expo-build-properties expo-crypto expo-intent-launcher expo-navigation-bar expo-status-bar lodash react-native-gesture-handler react-native-get-random-values react-native-keyboard-controller react-native-paper react-native-popup-menu react-native-reanimated react-native-screens react-native-worklets uuid
 ```
 
 As well as dev dependencies:
