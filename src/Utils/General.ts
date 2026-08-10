@@ -41,7 +41,7 @@ export const normalizePhone = (s: string): string => {
  * Format unix timestamp to datetime in device local timezone "dd-mm-yyyy hh:mm:ss".
  * Sample output: 10-08-2026 23:04:17
  */
-function formatDateTime(timestamp: number): string {
+export function formatDateTime(timestamp: number): string {
   const date = new Date(timestamp);
 
   const day = String(date.getDate()).padStart(2, '0');
