@@ -369,7 +369,7 @@ Now back to the Expo app, update the tsconfig.json to include an alias to the mo
 	...
     "paths": {
 		...
-      "@Module/*": ["./modules/*"],
+      "@Modules/*": ["./modules/*"],
     },
   },
 ```
@@ -377,7 +377,7 @@ Now back to the Expo app, update the tsconfig.json to include an alias to the mo
 Then import and use the functions in your regular React Native code like so:
 
 ```
-import MyLocalModule from '@Module/my-local-module/src/MyLocalModule';
+import MyLocalModule from '@Modules/my-local-module/src/MyLocalModule';
 
 ...
 console.log(MyLocalModule.hello());
