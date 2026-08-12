@@ -56,6 +56,24 @@ export function formatDateTime(timestamp: number): string {
 }
 
 /**
+ * Converts milliseconds into XXh XXm format
+ *
+ * Eg. 7h 32m
+ */
+export function formatDuration(durationMs: number): string {
+  const totalMinutes = Math.floor(
+    durationMs / 60_000,
+  );
+  const hours = Math.floor(
+    totalMinutes / 60,
+  );
+  const minutes =
+    totalMinutes % 60;
+
+  return `${hours}h ${minutes}m`;
+}
+
+/**
  * Validate values
  */
 export const isNonEmptyString = (v: unknown): v is string =>
