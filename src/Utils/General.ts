@@ -38,7 +38,7 @@ export const normalizePhone = (s: string): string => {
 };
 
 /**
- * Format unix timestamp to datetime in device local timezone "dd-mm-yyyy hh:mm:ss".
+ * Formats a Unix timestamp using the device's local timezone.
  * Sample output: 10-08-2026 23:04:17
  */
 export function formatDateTime(timestamp: number): string {
@@ -56,20 +56,16 @@ export function formatDateTime(timestamp: number): string {
 }
 
 /**
- * Converts milliseconds into XXh XXm format
+ * Formats milliseconds as a compact duration.
  *
  * Eg. 7h 32m
  */
 export function formatDuration(durationMs: number): string {
-  const totalMinutes = Math.floor(
-    durationMs / 60_000,
-  );
-  const hours = Math.floor(
-    totalMinutes / 60,
-  );
-  const minutes =
-    totalMinutes % 60;
+  const totalMinutes = Math.floor(durationMs / 60_000);
+  const hours = Math.floor(totalMinutes / 60);
+  const minutes = totalMinutes % 60;
 
+  if (hours === 0) return `${minutes}m`;
   return `${hours}h ${minutes}m`;
 }
 
