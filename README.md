@@ -34,13 +34,13 @@ This structure is required because:
 Each app:
 
 * Uses Metro watchFolders to include `../OneForAll/src`
-* Uses TypeScript path mapping (`@shared/*`)
+* Uses TypeScript path mapping (`@Shared/*`)
 * Imports shared code directly
 
 Example import:
 
 ```ts
-import { AdsProvider } from "@shared/Hooks/UseAds";
+import { AdsProvider } from "@Shared/Hooks/UseAds";
 ```
 
 ---

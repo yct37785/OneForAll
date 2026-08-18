@@ -19,11 +19,11 @@ import {
   DarkTheme as NavigationDarkTheme,
   DefaultTheme as NavigationDefaultTheme,
 } from '@react-navigation/native';
-import { StackNavigator } from '@shared/Nav/StackNavigator';
+import { StackNavigator } from '@Shared/Nav/StackNavigator';
 // pages
 import MainTabsNavigator from './Pages/MainTabsNavigator';
 // ads
-// import { AdsProvider } from '@shared/Hooks/UseAds';
+// import { AdsProvider } from '@Shared/Hooks/UseAds';
 
 // define
 LogBox.ignoreAllLogs();

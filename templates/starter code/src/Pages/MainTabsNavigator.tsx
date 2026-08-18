@@ -1,6 +1,6 @@
 import React, { memo } from 'react';
-import type { ScreenType } from '@shared/Screens/Screen';
-import { StackNavigator } from '@shared/Nav/StackNavigator';
+import type { ScreenType } from '@Shared/Screens/Screen';
+import { StackNavigator } from '@Shared/Nav/StackNavigator';
 
 import HomePage from './HomePage';
 

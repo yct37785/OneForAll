@@ -2,7 +2,7 @@
   "extends": "../OneForAll/templates/extend/tsconfig.template.json",
   "compilerOptions": {
     "paths": {
-      "@shared/*": ["../OneForAll/src/*"],
+      "@Shared/*": ["../OneForAll/src/*"],
     },
   },
   "include": ["src", "*.ts", "*.tsx", "app.config.*"],

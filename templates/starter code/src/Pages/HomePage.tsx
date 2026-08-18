@@ -1,9 +1,9 @@
 import React, { memo } from 'react';
 import { View } from 'react-native';
 import { useTheme, Text } from 'react-native-paper';
-import { ScreenLayout } from '@shared/Screens/ScreenLayout';
-import type { ScreenType } from '@shared/Screens/Screen';
-import { s } from '@shared/Defines/Styles';
+import { ScreenLayout } from '@Shared/Screens/ScreenLayout';
+import type { ScreenType } from '@Shared/Screens/Screen';
+import { s } from '@Shared/Defines/Styles';
 
 /******************************************************************************************************************
  * HomePage
