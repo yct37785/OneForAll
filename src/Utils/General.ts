@@ -70,6 +70,19 @@ export function formatDuration(durationMs: number): string {
 }
 
 /**
+ * Formats a timestamp as HH:MM in 24-hour local time.
+ *
+ * Example:
+ * 21:30
+ */
+export function formatHour(timestampMs: number): string {
+  const date = new Date(timestampMs);
+  const hour = String(date.getHours()).padStart(2, '0');
+  const minute = String(date.getMinutes()).padStart(2, '0');
+  return `${hour}:${minute}`;
+}
+
+/**
  * Validate values
  */
 export const isNonEmptyString = (v: unknown): v is string =>
