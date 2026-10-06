@@ -1,5 +1,6 @@
 import * as SQLite from 'expo-sqlite';
 
+// TODO: do not export SQLite.SQLiteDatabase type to avoid versioning conflicts
 export type SQLiteDatabase = SQLite.SQLiteDatabase;
 
 type DatabaseInitializer = (db: SQLiteDatabase) => Promise<void>;
