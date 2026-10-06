@@ -10,7 +10,7 @@ import {
 } from 'react-native-popup-menu';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { getToggleBtnColor } from './ToggleButton';
-import { s, ICON_SIZE_S } from '../Defines/Styles';
+import { s, ICON_SIZE_S } from '../defines/styles';
 
 /******************************************************************************************************************
  * PopupToggleButton props

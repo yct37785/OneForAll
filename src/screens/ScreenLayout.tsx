@@ -3,7 +3,7 @@ import { View, StyleSheet } from 'react-native';
 import { useTheme, Appbar } from 'react-native-paper';
 import { useNavigation } from '@react-navigation/native';
 import { SafeAreaView, Edge } from 'react-native-safe-area-context';
-import { s, APP_BAR_H } from '../Defines/Styles';
+import { s, APP_BAR_H } from '../defines/styles';
 
 /******************************************************************************************************************
  * ScreenLayout props

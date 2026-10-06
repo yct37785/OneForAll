@@ -2,7 +2,7 @@ import React, { memo } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import type { NativeStackScreenProps } from '@react-navigation/native-stack';
 import type { ParamListBase } from '@react-navigation/native';
-import type { ScreenNavigate, ScreenGoBack, ScreenType } from '../Screens/Screen';
+import type { ScreenNavigate, ScreenGoBack, ScreenType } from '../screens/Screen';
 
 /******************************************************************************************************************
  * StackNavigator props:

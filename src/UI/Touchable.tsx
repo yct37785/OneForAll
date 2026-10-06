@@ -10,7 +10,7 @@ import {
   StyleSheet,
 } from 'react-native';
 import { useTheme } from 'react-native-paper';
-import { TOUCHABLE_DEFAULTS } from '../Defines/Styles';
+import { TOUCHABLE_DEFAULTS } from '../defines/styles';
 
 /******************************************************************************************************************
  * Touchable props

@@ -3,7 +3,7 @@ import { StyleProp, StyleSheet, ViewStyle } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import Touchable from './Touchable';
-import { s, ICON_SIZE_S, DISABLED_OPACITY } from '../Defines/Styles';
+import { s, ICON_SIZE_S, DISABLED_OPACITY } from '../defines/styles';
 
 /******************************************************************************************************************
  * IconButton props

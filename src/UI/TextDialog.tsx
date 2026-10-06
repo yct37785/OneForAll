@@ -7,7 +7,7 @@ import {
   Text,
   useTheme,
 } from 'react-native-paper';
-import { s } from '../Defines/Styles';
+import { s } from '../defines/styles';
 import IconButton from './IconButton';
 
 /******************************************************************************************************************

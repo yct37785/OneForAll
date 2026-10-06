@@ -6,8 +6,8 @@ import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import Touchable from '../UI/Touchable';
-import type { ScreenGoBack, ScreenNavigate, ScreenType } from '../Screens/Screen';
-import { s, APP_BAR_H } from '../Defines/Styles';
+import type { ScreenGoBack, ScreenNavigate, ScreenType } from '../screens/Screen';
+import { s, APP_BAR_H } from '../defines/styles';
 
 /******************************************************************************************************************
  * BottomNavigator props:

@@ -1,7 +1,7 @@
 import React, { memo } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { BannerAd, BannerAdSize, TestIds } from 'react-native-google-mobile-ads';
-import { useAds } from '../Hooks/UseAds';
+import { useAds } from '../hooks/useAds';
 
 /******************************************************************************************************************
  * AdBanner props

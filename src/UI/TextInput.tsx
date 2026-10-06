@@ -11,7 +11,7 @@ import {
   ViewStyle,
   TextStyle,
 } from 'react-native';
-import { s } from '../Defines/Styles';
+import { s } from '../defines/styles';
 
 /******************************************************************************************************************
  * TextInput props & utilities
