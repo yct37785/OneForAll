@@ -55,11 +55,11 @@ export async function deleteDatabase(): Promise<void> {
     if (databasePromise !== null) {
       const db = await databasePromise;
       await db.closeAsync();
+      databasePromise = null;
+      await SQLite.deleteDatabaseAsync(config.name);
+    } else {
+      throw new Error(`database not found`);
     }
-
-    databasePromise = null;
-
-    await SQLite.deleteDatabaseAsync(config.name);
   } catch (e) {
     databasePromise = null;
     throw new Error(`Failed to delete database '${config.name}': ${e}`);
