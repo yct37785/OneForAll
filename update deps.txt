@@ -1,1 +1,1 @@
-npx expo install @expo/vector-icons @react-navigation/bottom-tabs @react-navigation/native @react-navigation/native-stack @types/react lodash react-native-google-mobile-ads react-native-paper react-native-popup-menu typescript uuid
+npx expo install @expo/vector-icons @react-navigation/bottom-tabs @react-navigation/native @react-navigation/native-stack @types/react expo-sqlite lodash react-native-google-mobile-ads react-native-paper react-native-popup-menu typescript uuid
