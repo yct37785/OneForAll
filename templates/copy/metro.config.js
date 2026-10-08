@@ -9,9 +9,6 @@ const config = getDefaultConfig(projectRoot);
 // let Metro read & watch files outside the app root
 config.watchFolders = [sharedRoot];
 
-// all runtime packages should come from this current project
-config.resolver.disableHierarchicalLookup = true;
-
 // make sure Metro resolves modules from the app's node_modules first
 config.resolver.nodeModulesPaths = [
   path.resolve(projectRoot, "node_modules")
