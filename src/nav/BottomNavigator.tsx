@@ -7,7 +7,8 @@ import { StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import Touchable from '../UI/Touchable';
 import type { ScreenGoBack, ScreenNavigate, ScreenType } from '../screens/Screen';
-import { s, NAV_BAR_H } from '../defines/styles';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { s, NAV_BAR_H, APP_BAR_H } from '../defines/styles';
 
 /******************************************************************************************************************
  * BottomNavigator props:
@@ -23,6 +24,7 @@ export type BottomNavigatorProps = {
   initialRouteName: string;
   tabMap: Record<string, ScreenType>;
   tabConfig: Record<string, TabConfig>;
+  showLabel?: boolean;
 };
 
 const Tab = createBottomTabNavigator();
@@ -31,8 +33,10 @@ const Tab = createBottomTabNavigator();
  * BottomNavigator comp
  ******************************************************************************************************************/
 export const BottomNavigator: React.FC<BottomNavigatorProps> = memo(
-  ({ initialRouteName, tabMap, tabConfig }) => {
+  ({ initialRouteName, tabMap, tabConfig, showLabel = true }) => {
     const theme = useTheme();
+    const insets = useSafeAreaInsets();
+    const tabBarHeight = showLabel ? APP_BAR_H : NAV_BAR_H;
 
     return (
       <Tab.Navigator
@@ -46,7 +50,7 @@ export const BottomNavigator: React.FC<BottomNavigatorProps> = memo(
             tabBarShowLabel: true,
             tabBarLabel: config?.label ?? route.name,
             tabBarLabelStyle: {
-              marginTop: 2
+              marginTop: s(0.5)
             },
 
             tabBarIcon: ({ color, size }) => (
@@ -61,15 +65,19 @@ export const BottomNavigator: React.FC<BottomNavigatorProps> = memo(
             tabBarInactiveTintColor: theme.colors.onSurfaceVariant,
 
             tabBarStyle: {
+              position: 'absolute',
+              left: 0,
+              right: 0,
+              bottom: insets.bottom,
+              height: tabBarHeight,
               borderTopWidth: StyleSheet.hairlineWidth,
-              paddingTop: 6,
-              paddingBottom: 6,
-              height: NAV_BAR_H,
               backgroundColor: theme.colors.surface,
               borderTopColor: theme.colors.outlineVariant,
             },
 
-            tabBarItemStyle: {},
+            tabBarItemStyle: {
+              height: tabBarHeight,
+            },
 
             tabBarButton: (props) => {
               const { disabled, onPress, children, ...rest } = props;
