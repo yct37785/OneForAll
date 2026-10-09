@@ -1,4 +1,5 @@
 export const APP_BAR_H = 64;
+export const NAV_BAR_H = 48;
 export const SPACE_UNIT = 8;
 
 /**

@@ -7,7 +7,7 @@ import { StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import Touchable from '../UI/Touchable';
 import type { ScreenGoBack, ScreenNavigate, ScreenType } from '../screens/Screen';
-import { s, APP_BAR_H } from '../defines/styles';
+import { s, NAV_BAR_H } from '../defines/styles';
 
 /******************************************************************************************************************
  * BottomNavigator props:
@@ -64,7 +64,7 @@ export const BottomNavigator: React.FC<BottomNavigatorProps> = memo(
               borderTopWidth: StyleSheet.hairlineWidth,
               paddingTop: 6,
               paddingBottom: 6,
-              height: APP_BAR_H,
+              height: NAV_BAR_H,
               backgroundColor: theme.colors.surface,
               borderTopColor: theme.colors.outlineVariant,
             },
