@@ -17,8 +17,8 @@ const SQLiteContext = createContext<SQLiteContextType | null>(null);
  *  - Load database on startup.
  *  - Manage UI-relevant state.
  * 
- * @prop name - the global database name
- * @prop initialize - function that receives the DB instance to carry out initialization (create tables etc)
+ * @param name - the global database name
+ * @param initialize - function that receives the DB instance to carry out initialization (create tables etc)
  ********************************************************************************************************************/
 export const SQLiteProvider: React.FC<{
   name: string;
