@@ -7,7 +7,6 @@ import { StyleSheet } from 'react-native';
 import { useTheme } from 'react-native-paper';
 import Touchable from '../UI/Touchable';
 import type { ScreenGoBack, ScreenNavigate, ScreenType } from '../screens/Screen';
-import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { s, NAV_BAR_H, APP_BAR_H } from '../defines/styles';
 
 /******************************************************************************************************************
@@ -35,7 +34,6 @@ const Tab = createBottomTabNavigator();
 export const BottomNavigator: React.FC<BottomNavigatorProps> = memo(
   ({ initialRouteName, tabMap, tabConfig, showLabel = true }) => {
     const theme = useTheme();
-    const insets = useSafeAreaInsets();
     const tabBarHeight = showLabel ? APP_BAR_H : NAV_BAR_H;
 
     return (
@@ -68,7 +66,7 @@ export const BottomNavigator: React.FC<BottomNavigatorProps> = memo(
               position: 'absolute',
               left: 0,
               right: 0,
-              bottom: insets.bottom,
+              bottom: 0,
               height: tabBarHeight,
               borderTopWidth: StyleSheet.hairlineWidth,
               backgroundColor: theme.colors.surface,
