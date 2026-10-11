@@ -42,3 +42,13 @@ export function formatHour(timestampMs: number): string {
   const minute = String(date.getMinutes()).padStart(2, '0');
   return `${hour}:${minute}`;
 }
+
+/**
+ * Formats a timestamp as month YYYY in local time.
+ *
+ * Example:
+ * October 2026
+ */
+export function getMonthLabel(timeMs: number): string {
+  return new Date(timeMs).toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
+}
