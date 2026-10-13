@@ -1,23 +1,23 @@
 import React, { memo, createContext, useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { AppState } from 'react-native';
 
-export type PermissionAccessContextType = {
+export type PermissionsAccessContextType = {
   isLoaded: boolean;
   isEnabled: boolean;
   error: Error | null;
   openSettings: () => Promise<void>;
 };
 
-export type PermissionAccessProviderProps = {
+export type PermissionsAccessProviderProps = {
   children: React.ReactNode;
   checkPerms: () => Promise<boolean>;
   openSettings: () => Promise<void>;
 };
 
-const PermissionAccessContext = createContext<PermissionAccessContextType | null>(null);
+const PermissionsAccessContext = createContext<PermissionsAccessContextType | null>(null);
 
 /********************************************************************************************************************
- * Create an independent permission-access context.
+ * Create an independent permissions-access context.
  *
  * Automatically:
  * - checks access when mounted
@@ -32,7 +32,7 @@ const PermissionAccessContext = createContext<PermissionAccessContextType | null
  *  - error: error instance thrown by checkPerms
  *  - openSettings: openSettings from param
  ********************************************************************************************************************/
-export const PermissionAccessProvider: React.FC<PermissionAccessProviderProps> = memo(({
+export const PermissionsAccessProvider: React.FC<PermissionsAccessProviderProps> = memo(({
   children,
   checkPerms,
   openSettings
@@ -88,7 +88,7 @@ export const PermissionAccessProvider: React.FC<PermissionAccessProviderProps> =
   /**
    * Context.
    */
-  const value = useMemo<PermissionAccessContextType>(() => ({
+  const value = useMemo<PermissionsAccessContextType>(() => ({
     isLoaded,
     isEnabled,
     error,
@@ -98,14 +98,14 @@ export const PermissionAccessProvider: React.FC<PermissionAccessProviderProps> =
   );
 
   return (
-    <PermissionAccessContext.Provider value={value}>
+    <PermissionsAccessContext.Provider value={value}>
       {children}
-    </PermissionAccessContext.Provider>
+    </PermissionsAccessContext.Provider>
   );
 });
 
-export const usePermissionAccess = (): PermissionAccessContextType => {
-  const context = useContext(PermissionAccessContext);
+export const usePermissionsAccess = (): PermissionsAccessContextType => {
+  const context = useContext(PermissionsAccessContext);
   if (!context) {
     throw new Error('usePermissionAccess must be used within <PermissionAccessProvider>');
   }
