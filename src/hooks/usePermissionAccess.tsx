@@ -2,8 +2,8 @@ import React, { memo, createContext, useCallback, useContext, useEffect, useMemo
 import { AppState } from 'react-native';
 
 export type PermissionAccessContextType = {
-  arePermsLoaded: boolean;
-  arePermsEnabled: boolean;
+  isLoaded: boolean;
+  isEnabled: boolean;
   error: Error | null;
   openSettings: () => Promise<void>;
 };
@@ -11,7 +11,7 @@ export type PermissionAccessContextType = {
 export type PermissionAccessProviderProps = {
   children: React.ReactNode;
   checkPerms: () => Promise<boolean>;
-  openPermsSettings: () => Promise<void>;
+  openSettings: () => Promise<void>;
 };
 
 const PermissionAccessContext = createContext<PermissionAccessContextType | null>(null);
@@ -24,15 +24,21 @@ const PermissionAccessContext = createContext<PermissionAccessContextType | null
  * - checks again whenever the app becomes active
  * 
  * @param checkPerms - function to check whether permissions are currently granted
- * @param openPermsSettings - open the native settings/UI used to grant access
+ * @param openSettings - open the native settings/UI used to grant access
+ * 
+ * @returns:
+ *  - isLoaded: true if all perms loaded, false otherwise
+ *  - isEnabled: true if all perms are enabled, false otherwise
+ *  - error: error instance thrown by checkPerms
+ *  - openSettings: openSettings from param
  ********************************************************************************************************************/
 export const PermissionAccessProvider: React.FC<PermissionAccessProviderProps> = memo(({
   children,
   checkPerms,
-  openPermsSettings
+  openSettings
 }) => {
-  const [arePermsLoaded, setIsPermLoaded] = useState(false);
-  const [arePermsEnabled, setIsPermEnabled] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
+  const [isEnabled, setIsEnabled] = useState(false);
   const [error, setError] = useState<Error | null>(null);
 
   /**
@@ -41,12 +47,12 @@ export const PermissionAccessProvider: React.FC<PermissionAccessProviderProps> =
   const refresh = useCallback(async () => {
     try {
       const enabled = await checkPerms();
-      setIsPermEnabled(enabled);
+      setIsEnabled(enabled);
       setError(null);
     } catch (e) {
       setError(e instanceof Error ? e : new Error(String(e)));
     } finally {
-      setIsPermLoaded(true);
+      setIsLoaded(true);
     }
   }, [checkPerms]);
 
@@ -61,9 +67,9 @@ export const PermissionAccessProvider: React.FC<PermissionAccessProviderProps> =
    * Open native permission/access settings.
    * Access will automatically be checked again when the application becomes active.
    */
-  const openSettings = useCallback(async () => {
-    await openPermsSettings();
-  }, [openPermsSettings]);
+  const openSettingsProxy = useCallback(async () => {
+    await openSettings();
+  }, [openSettings]);
 
   /**
    * Re-check after returning from native settings.
@@ -83,12 +89,12 @@ export const PermissionAccessProvider: React.FC<PermissionAccessProviderProps> =
    * Context.
    */
   const value = useMemo<PermissionAccessContextType>(() => ({
-    arePermsLoaded,
-    arePermsEnabled,
+    isLoaded,
+    isEnabled,
     error,
-    openSettings
+    openSettings: openSettingsProxy
   }),
-    [arePermsLoaded, arePermsEnabled, error, openSettings]
+    [isLoaded, isEnabled, error, openSettingsProxy]
   );
 
   return (
