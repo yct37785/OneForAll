@@ -102,10 +102,9 @@ export function useFocusedRangeScroll({
 }: FocusedRangeScrollConfig) {
 
   const rowToRange = useMemo(() => buildRowToRange(itemCount, ranges), [itemCount, ranges]);
-  const firstRange = ranges[0];
   const focusedRangeIndex = useSharedValue(0);
-  const focusedStartIndex = useSharedValue(firstRange?.startIndex ?? 0);
-  const focusedEndIndex = useSharedValue(firstRange?.endIndex ?? 0);
+  const focusedStartIndex = useSharedValue(ranges[0]?.startIndex ?? 0);
+  const focusedEndIndex = useSharedValue(ranges[0]?.endIndex ?? 0);
 
   /**
    * Reset if the data changes.
