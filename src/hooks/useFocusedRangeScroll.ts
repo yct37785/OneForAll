@@ -49,17 +49,33 @@ function buildRowToRange(itemCount: number, ranges: IndexRange[]): number[] {
  * - accepts only numbers / plain arrays
  * - contains no application/domain objects
  */
-function getFocusedRangeIndex({ scrollY, itemCount, rowHeight, focusOffsetRows, rowToRange }: {
+function getFocusedRangeIndex({ scrollY, itemCount, rowHeight, focusOffsetRows, ranges, rowToRange }: {
   scrollY: number;
   itemCount: number;
   rowHeight: number;
   focusOffsetRows: number;
+  ranges: IndexRange[];
   rowToRange: number[];
 }): number {
   'worklet';
 
-  if (itemCount <= 0 || rowHeight <= 0) {
+  if (itemCount <= 0 || rowHeight <= 0 || ranges.length === 0) {
     return 0;
+  }
+
+  // edge cases
+  const topRangeRowCount = (ranges[0].endIndex - ranges[0].startIndex + 1);
+  const topRangeTooShort = topRangeRowCount <= focusOffsetRows;
+  if (topRangeTooShort && scrollY <= focusOffsetRows * rowHeight) {
+    return 0;
+  }
+  const lastRange = ranges[ranges.length - 1];
+  const bottomRangeRowCount = (lastRange.endIndex - lastRange.startIndex + 1);
+  const bottomRangeTooShort = bottomRangeRowCount <= focusOffsetRows;
+  console.log("scrollY: " + scrollY + ", total height: " + (itemCount * rowHeight));
+  if (scrollY >= itemCount * rowHeight) {
+    console.log('asdfasd');
+    return ranges.length - 1;
   }
 
   const rawIndex = Math.floor((scrollY + focusOffsetRows * rowHeight) / rowHeight);
@@ -127,6 +143,7 @@ export function useFocusedRangeScroll({
         itemCount,
         rowHeight,
         focusOffsetRows,
+        ranges,
         rowToRange
       });
 
