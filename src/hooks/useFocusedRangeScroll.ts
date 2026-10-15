@@ -9,6 +9,7 @@ export type IndexRange = {
 export type FocusedRangeScrollConfig = {
   itemCount: number;
   rowHeight: number;
+  scrollViewHeight: number;
 
   /**
    * Number of rows below the top of the viewport used to determine the focused row.
@@ -49,10 +50,11 @@ function buildRowToRange(itemCount: number, ranges: IndexRange[]): number[] {
  * - accepts only numbers / plain arrays
  * - contains no application/domain objects
  */
-function getFocusedRangeIndex({ scrollY, itemCount, rowHeight, focusOffsetRows, ranges, rowToRange }: {
+function getFocusedRangeIndex({ scrollY, itemCount, rowHeight, scrollViewHeight, focusOffsetRows, ranges, rowToRange }: {
   scrollY: number;
   itemCount: number;
   rowHeight: number;
+  scrollViewHeight: number;
   focusOffsetRows: number;
   ranges: IndexRange[];
   rowToRange: number[];
@@ -64,17 +66,16 @@ function getFocusedRangeIndex({ scrollY, itemCount, rowHeight, focusOffsetRows, 
   }
 
   // edge cases
-  const topRangeRowCount = (ranges[0].endIndex - ranges[0].startIndex + 1);
+  const topRangeRowCount = ranges[0].endIndex - ranges[0].startIndex + 1;
   const topRangeTooShort = topRangeRowCount <= focusOffsetRows;
-  if (topRangeTooShort && scrollY <= focusOffsetRows * rowHeight) {
+  if (topRangeTooShort && scrollY <= (topRangeRowCount - 1) * rowHeight) {
     return 0;
   }
   const lastRange = ranges[ranges.length - 1];
-  const bottomRangeRowCount = (lastRange.endIndex - lastRange.startIndex + 1);
+  const bottomRangeRowCount = lastRange.endIndex - lastRange.startIndex + 1;
   const bottomRangeTooShort = bottomRangeRowCount <= focusOffsetRows;
-  console.log("scrollY: " + scrollY + ", total height: " + (itemCount * rowHeight));
-  if (scrollY >= itemCount * rowHeight) {
-    console.log('asdfasd');
+  // console.log("scrollY: " + scrollY + ", total height: " + (itemCount * rowHeight - (scrollViewHeight + 10)));
+  if (scrollY >= itemCount * rowHeight - (scrollViewHeight + 10)) {
     return ranges.length - 1;
   }
 
@@ -113,6 +114,7 @@ function getFocusedRangeIndex({ scrollY, itemCount, rowHeight, focusOffsetRows, 
 export function useFocusedRangeScroll({
   itemCount,
   rowHeight,
+  scrollViewHeight,
   focusOffsetRows = 0,
   ranges,
 }: FocusedRangeScrollConfig) {
@@ -142,6 +144,7 @@ export function useFocusedRangeScroll({
         scrollY: event.contentOffset.y,
         itemCount,
         rowHeight,
+        scrollViewHeight,
         focusOffsetRows,
         ranges,
         rowToRange
